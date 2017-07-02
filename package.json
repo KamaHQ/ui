@@ -1,0 +1,42 @@
+{
+  "name": "kama-ui",
+  "private": true,
+  "scripts": {
+    "build": "webpack --progress -p",
+    "serve": "webpack-dev-server --inline"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.20.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "react-router": "^3.0.2",
+    "react-router-redux": "^4.0.7",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.8.1",
+    "redux-observable": "^0.13.0",
+    "redux-thunk": "^2.2.0",
+    "rx": "^4.1.0",
+    "rx-connect": "^0.6.1",
+    "rxjs": "^5.1.0",
+    "semantic-ui-css": "~2.2.2",
+    "xterm": "sourcelair/xterm.js#045f361"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "~6.2.0",
+    "babel-plugin-transform-decorators-legacy": "~1.3.4",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-es2015-maybe-webpack": "^1.2.1",
+    "babel-preset-react": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "css-loader": "^0.26.1",
+    "file-loader": "^0.10.0",
+    "html-webpack-plugin": "^2.28.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
+  }
+}
