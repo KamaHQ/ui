@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const targetPath = path.join(__dirname, "dist");
 
 module.exports = {
-    devtool: "cheap-module-eval-source-map",
+    devtool: "source-map",
     node: {
         __filename: true,
         __dirname: true
