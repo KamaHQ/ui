@@ -45,6 +45,7 @@ import ReactiveGraphQLClient from "../../../../utils/ReactiveGraphQLClient";
                     executions(last:10) {
                         number
                         status
+                        timestamp
                     }
                 }
             }`
