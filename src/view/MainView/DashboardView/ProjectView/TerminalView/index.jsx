@@ -4,14 +4,13 @@ import moment from "moment";
 
 import React from "react";
 import Rx from "rxjs";
-import Xterm from "xterm/dist/xterm.js";
-import fit from "xterm/dist/addons/fit/fit";
+import Terminal from "xterm";
 
 import ReactiveGraphQLClient from "../../../../../utils/ReactiveGraphQLClient";
 
-export default class Terminal extends React.Component {
+export default class TerminalView extends React.Component {
 
-    term = new Xterm({
+    term = new Terminal({
         cursorBlink: false,
         tabStopWidth: 4,
         disableStdin: true,
@@ -23,6 +22,16 @@ export default class Terminal extends React.Component {
         super(props);
 
         this.props$ = new Rx.BehaviorSubject(props);
+
+        Terminal.loadAddon('fit');
+
+        this.term.on('open', () => {
+            this.resize = Rx.Observable.fromEvent(window, 'resize')
+                .debounceTime(100)
+                .startWith({})
+                .do(() => this.term.fit())
+                .subscribe();
+        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -30,8 +39,7 @@ export default class Terminal extends React.Component {
     }
 
     componentDidMount() {
-        this.term.open(this.terminalEl);
-        this.term.fit();
+        this.term.open(this.terminalEl, false);
 
         this.subscription = this.props$
             .pluck("params", "build")
@@ -90,13 +98,14 @@ export default class Terminal extends React.Component {
     }
 
     componentWillUnmount() {
+        this.resize && this.resize.unsubscribe();
         this.subscription && this.subscription.unsubscribe();
     }
 
     render() {
         return (
-            <div style={{ height: "90%", margin: 15, padding: 15, backgroundColor: "#393939" }}>
-                <div ref={ it => this.terminalEl = it } className={ this.props.className } style={{ height: "100%", backgroundColor: "#393939" }} />
+            <div className="build-log">
+                <div ref={ it => { this.terminalEl = it } } className={ `${this.props.className} build-log__container` }/>
             </div>
         );
     }
