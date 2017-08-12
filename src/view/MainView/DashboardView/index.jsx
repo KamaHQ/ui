@@ -63,14 +63,16 @@ export default class DashboardView extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        { projects && projects.map(({ key, repository, executions: [ execution = {} ] = [] }) => (
+                        { projects && projects.map(({ key, repository, executions: [ execution ] = [] }) => (
                             <tr key={key}>
                                 <td><Link key={key} to={`${key}`}>{key}</Link></td>
                                 <td><Repository repository={repository} /></td>
-                                <td className="positive">
-                                    <Link to={`${key}/${execution.number}`} className="right floated">#{execution.number}</Link>
-                                    <div className="sub header">{moment(execution.timestamp).fromNow()}</div>
-                                </td>
+                                { execution ? (
+                                    <td className="positive">
+                                        <Link to={`${key}/${execution.number}`} className="right floated">#{execution.number}</Link>
+                                        <div className="sub header">{moment(execution.timestamp).fromNow()}</div>
+                                    </td>
+                                ) : <td></td> }
                             </tr>
                         ))}
                     </tbody>
