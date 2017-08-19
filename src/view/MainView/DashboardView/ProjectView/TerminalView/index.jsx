@@ -6,8 +6,6 @@ import React from "react";
 import Rx from "rxjs";
 import Terminal from "xterm";
 
-import ReactiveGraphQLClient from "../../../../../utils/ReactiveGraphQLClient";
-
 export default class TerminalView extends React.Component {
 
     term = new Terminal({
@@ -45,21 +43,11 @@ export default class TerminalView extends React.Component {
             .pluck("params", "build")
             .distinctUntilChanged()
             .filter(it => it)
-            .switchMap(build => this.props$.map(({ params: { organization, project } }) => `${organization}/${project}`).distinctUntilChanged().switchMap(key => ReactiveGraphQLClient
-                .query("/graphql",
-                    `{
-                        execution(key:"${key}", number:${build}) {
-                            taskId
-                        }
-                    }`
-                )
-                .pluck("execution", "taskId")
-                .take(1)
-            ))
-            .switchMap(executionId => Rx.Observable.defer(() => {
+            .switchMap(number => this.props$.map(({ params: { organization, project } }) => `${organization}/${project}`).distinctUntilChanged().switchMap(key => Rx.Observable.defer(() => {
                 this.term.clear();
                 let lastHit = undefined;
-                return Rx.Observable.defer(() => Rx.Observable
+                return Rx.Observable
+                    .defer(() => Rx.Observable
                         .ajax({ method: "POST", url: "/plugins/logging-elasticsearch/logz", body: JSON.stringify({
                             size: 100,
                             sort: [
@@ -70,7 +58,8 @@ export default class TerminalView extends React.Component {
                             query: {
                                 bool: {
                                     must: [
-                                        { term: { executionId } }
+                                        { term: { number } },
+                                        { term: { key } }
                                     ]
                                 }
                             }
@@ -92,8 +81,8 @@ export default class TerminalView extends React.Component {
                             this.term.scrollToBottom();
                         }
                         lastHit = _.last(items)
-                    })
-            }))
+                    });
+            })))
             .subscribe();
     }
 
