@@ -15,16 +15,18 @@ export default class MainView extends React.Component {
                     <Link to="/" className="header item" activeClassName="active" onlyActiveOnIndex={ true }>Kama</Link>
 
                     <div className="ui large breadcrumb item borderless">
-                        { organization && <Link to={`${organization}`} activeClassName="active" className="section" onlyActiveOnIndex>{organization}</Link> }
+                        { project && <Link to={`${organization}/${project}`} className="section">{organization}</Link> }
                         { project && <div className="divider"> / </div> }
                         { project && <Link to={`${organization}/${project}`} activeClassName="active" className="section" onlyActiveOnIndex>{project}</Link> }
                         { build && <div className="divider"> / </div> }
                         { build && <Link to={`${organization}/${project}/${build}`} activeClassName="active" className="section">#{build}</Link> }
                     </div>
+                    {/* TODO
                     <div className="right menu">
                         <Link to={`/settings`} activeClassName="active" className="item"><i className="large setting icon" style={{ marginRight: 0 }}></i></Link>
                         <div className="item"><NodesIndicator /></div>
                     </div>
+                    */}
                 </div>
                 {children}
             </div>
