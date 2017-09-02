@@ -7,14 +7,7 @@ export default class EventSourceObservable {
             const source = new EventSource(url);
             source.onmessage = it => {
                 if (it.type === "message") {
-                    let data = it.data;
-
-                    // FIXME wtf?
-                    if (data.startsWith("data:")) {
-                        data = data.substring("data:".length)
-                    }
-
-                    observer.next(JSON.parse(data));
+                    observer.next(JSON.parse(it.data));
                 }
             };
             source.onerror = e => e.eventPhase === 2 ? observer.complete() : observer.error(e);

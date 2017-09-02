@@ -14,8 +14,6 @@ export default class TerminalView extends React.Component {
         cursorBlink: false,
         tabStopWidth: 4,
         disableStdin: true,
-        // cols: 142,
-        // rows: 48
     });
 
     constructor(props) {
