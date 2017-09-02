@@ -1,0 +1,13 @@
+version: '2.1'
+
+services:
+  ui:
+    build: .
+    image: kama/ui
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=PathPrefix:/"
+networks:
+  default:
+    external:
+      name: kama_default

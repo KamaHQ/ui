@@ -1,0 +1,12 @@
+version: '2.3'
+
+services:
+  ui:
+    build:
+      context: .
+      target: workspace
+    volumes:
+      - ./src:/app/src
+    command: yarn serve
+    ports:
+      - 3000:3000

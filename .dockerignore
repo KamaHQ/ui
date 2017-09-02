@@ -1,5 +1,6 @@
 **
-!Dockerfile
+!src/
 !nginx.conf
-!dist/
-dist/*.js.map
+!nwb.config.js
+!package.json
+!yarn.lock
