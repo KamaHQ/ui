@@ -2,8 +2,6 @@ import "semantic-ui-css/semantic.css";
 import "xterm/dist/xterm.css";
 import "./style.css";
 
-import "babel-polyfill";
-
 import { rxConnect } from "rx-connect";
 import rx5Adapter from "rx-connect/lib/rx5Adapter";
 rxConnect.adapter = rx5Adapter;
@@ -20,29 +18,23 @@ import { createEpicMiddleware } from 'redux-observable';
 
 import routes from "./routes";
 import reducers from "./reducers";
+import rootEpic from './epics';
 
 const services = {};
 
 const history = useRouterHistory(createHashHistory)();
 
-const middlewares = [
-    applyMiddleware(
-        routerMiddleware(history),
-    ),
-];
+const middlewares = [];
 
 if (process.env.NODE_ENV !== "production") {
-    middlewares.push(
-        applyMiddleware(createLogger({
+    middlewares.push(createLogger({
             duration: true,
             collapsed: true,
-        }))
+        })
     );
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-import rootEpic from './epics';
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
@@ -52,10 +44,7 @@ const store = createStore(
         applyMiddleware(
             epicMiddleware,
             routerMiddleware(history),
-            createLogger({
-                duration: true,
-                collapsed: true,
-            })
+            ...middlewares
         )
     )
 );
@@ -66,7 +55,7 @@ ReactDOM.render((
             { routes }
         </Router>
     </Provider>
-), document.body); // Don't mount on body, m'kay?
+), document.body); // TODO Don't mount on body, m'kay? Figure out how to deal with xterm.js, it fails if not mounted on body
 
 
 
