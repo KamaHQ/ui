@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --progress -p",
-    "serve": "webpack-dev-server --inline"
+    "serve": "webpack-dev-server --inline",
+    "serve-local": "cross-env PROXY_TARGET=http://localhost:8080 webpack-dev-server --inline"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",

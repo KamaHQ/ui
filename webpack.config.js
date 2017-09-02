@@ -55,7 +55,7 @@ module.exports = {
         contentBase: targetPath,
         proxy: {
             '/': {
-                target: "http://localhost:8080/",
+                target: process.env.PROXY_TARGET || "http://demo.kama.zone/",
                 compress: false,
                 secure: false,
                 changeOrigin: true
