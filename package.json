@@ -26,6 +26,7 @@
     "xterm": "^2.9.2"
   },
   "devDependencies": {
+    "cross-env": "^5.0.5",
     "nwb": "^0.18.0"
   }
 }
