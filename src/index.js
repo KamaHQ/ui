@@ -2,10 +2,6 @@ import "semantic-ui-css/semantic.css";
 import "xterm/dist/xterm.css";
 import "./style.css";
 
-import { rxConnect } from "rx-connect";
-import rx5Adapter from "rx-connect/lib/rx5Adapter";
-rxConnect.adapter = rx5Adapter;
-
 import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, compose, applyMiddleware } from 'redux';
